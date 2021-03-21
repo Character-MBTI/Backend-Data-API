@@ -1,11 +1,10 @@
 package main
 
-import(
+import (
+	"github.com/go-chi/chi"
 	"log"
 	"net/http"
-	"github.com/go-chi/chi"
 	"routes"
-
 )
 
 func main(){
@@ -18,5 +17,11 @@ func main(){
 func setRouter() *chi.Mux {
 	router := chi.NewRouter()
 	router.Get("/",routes.TestMain)
+
+	//Data Manipulation: Post Request
+	router.Route("/data", func (r chi.Router){
+		r.Post("/receive",routes.ReceiveData)
+		r.Post("/send",routes.SendData)
+	})
 	return router
 }
